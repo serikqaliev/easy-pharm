@@ -10,7 +10,7 @@ pyjwt[crypto]>=2.5.0,<3.0
 distlib==0.3.4
 distro==1.4.0
 filelock==3.7.1
-future==0.18.2
+future==0.18.3
 idna==2.8
 josepy==1.2.0
 mock==3.0.5
