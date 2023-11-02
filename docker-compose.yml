@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+    restart: always
+    command:
+      - /bin/sh
+      - -c
+      - ./entrypoint.sh
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DOMAIN}
+    user: "django:django"
+    volumes:
+      - media:/vol/media
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: calendaria-postgres
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Calendaria-123
+      POSTGRES_DB: calendaria
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=en_US.UTF-8 -A md5"
+    ports:
+      - "5432:5432"
+      - "5433:5433"
+
+volumes:
+  media:
+  postgres-data:

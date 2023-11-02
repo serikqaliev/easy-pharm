@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Руководство backend.calendaria.kz</title>
+</head>
+<body style="font-family: 'Roboto Light', sans-serif; margin: 0; min-height: 100vh">
+<header style="background: blue; width: 100%">
+  <div style="width: 1000px; display: flex; justify-content: space-between; color: white; margin: auto; align-items: center">
+    <h5>Документация для backend.calendaria.kz</h5>
+  </div>
+</header>
+  <div style="max-width: 1000px; margin: auto;">
+    <p>Выберите микросервис</p>
+    <nav>
+      <ul style="margin: 0">
+        <li><a href="https://backend.calendaria.kz/docs/user.html">Пользователь</a></li>
+        <li><a href="https://backend.calendaria.kz/docs/utils.html">Утилиты</a></li>
+        <li><a href="https://backend.calendaria.kz/docs/events.html">События (events)</a></li>
+      </ul>
+    </nav>
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Получение OTP - (one time password рус. одноразовый пароль)</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/create_user/">https://backend.calendaria.kz/users/create_user/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"phone": "+77770237836"}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{message: "success"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{message: "failed"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Код для входа придет на телефон через смс</span></p>
+      <p><span style="font-weight: bold">Описание:</span> Предназначен для получения доступа в приложение, при отправке на него номера телефона, присылается код на указанный номер который является паролем для входа в аккаунт, если пользователь новый то он создает его и так же задает ему пароль</p>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Авторизация пользователя</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/auth/">https://backend.calendaria.kz/auth/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"phone": "+77770237836", "password": "123123"}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"token": "64ba3cfaa73b34384725c20c7acd3fd44236063a"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+            "non_field_errors": [
+                "Невозможно войти с предоставленными учетными данными."
+            ]
+        }</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Удачная авторизация вернет токен доступа пользователю</span></p>
+      <p><span style="font-weight: bold">Описание:</span> Предназначен для получения токена авторизации для дальнейшего использования в получении данных пренадлежащим пользователю, <span style="color:blue">password</span> мы получаем <span style="color:blue">в предыдущем endpoint</span> через смс он и должен использоваться для авторизации</p>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Получение данных о пользователе</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/me/">https://backend.calendaria.kz/users/me/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span> <br style="color:green"><br/>
+        <span>&nbsp;&nbsp;&nbsp;{</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"first_name": null,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"last_name": null,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": "family guy",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phone": "777",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"time_zone": "Nuku'alofa GMT+13:00",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"avatar": "/avatars/Body.png",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"created_at": "2023-02-02T11:56:20.504029Z",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"updated_at": "2023-02-02T21:36:22.776411Z",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_active": true,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_online": false,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"contacts": [</br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"first_name": null,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"last_name": null,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": "device.png",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phone": "+77770237836",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"time_zone": "123",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"avatar": "avatars/device.png",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"created_at": "2023-02-02T14:53:30.838788Z",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"updated_at": "2023-02-02T20:44:43.301738Z",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_active": true,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_online": false,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"in_calendaria": true</br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "label": "Noname",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phone": "+77770237832",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tel",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"in_calendaria": false</br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</br>
+      </span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+          "detail": "Учетные данные не были предоставлены."
+      }</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Получение всех данных пользователя</span></p>
+      <p><span style="font-weight: bold">Примечание:</span> <span style="color:midnightblue">В headers запроса нужно отправить поле  <span style="color: green">"Authorization":"Token 64ba3cfaa73b34384725c20c7acd3fd44236063a"</span>, где <span style="color: green">"64ba3cfaa73b34384725c20c7acd3fd44236063a"</span> токен полученный в предыдущем endpoint</span></p>
+      <p><span style="font-weight: bold">Описание:</span> Предназначен для получения всех данных пользователя, запрос не изменится но получаемые данные будут изменятся по мере роста</p>
+    </div>
+     <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Активировать пользователя</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/activate_user/">https://backend.calendaria.kz/users/activate_user/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"username": "family guy", "time_zone": "Nuku'alofa GMT+13:00"}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message": "user activated"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{"detail": "Учетные данные не были предоставлены."}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Пользователь станет активным и поля username и time_zone обновятся</span></p>
+      <p><span style="font-weight: bold">Описание:</span> Предназначен для дальнейшего входа в приложение и начала работы</p>
+    </div>
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Изменить аватар</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/change_avatar/">https://backend.calendaria.kz/users/change_avatar/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"avatar": binary}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message": "avatar changed"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{"detail": "Учетные данные не были предоставлены."}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">У пользователя обновится аватар</span></p>
+      <p><span style="font-weight: bold">Описание:</span> Аватар был сделан отдельным Endpoint, для удобства его переиспользования</p>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Обновление списка контактов</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/create_contact_list/">https://backend.calendaria.kz/users/create_contact_list/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"contacts":[{"label":"Bek", "phone":"+77770237836", "type":"tel"}, {"label":"Noname", "phone":"+77770237832", "type":"tel"}]}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message": "user contacts updated"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{"detail": "JSON parse error - Invalid control character at: line 1 column 80 (char 79)"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Переданный массив обработается и сядет в контакты пользователя</span></p>
+      <p><span style="font-weight: bold">Описание:</span> передача контактов от устройства сервису для обработки и записи</p>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Получение данных о другом пользователе</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/user_view/1/">`https://backend.calendaria.kz/users/user_view/int:id/`</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span> <br style="color:green"><br/>
+        <span>&nbsp;&nbsp;&nbsp;{</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"first_name": null,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"last_name": null,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": "family guy",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phone": "777",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"time_zone": "Nuku'alofa GMT+13:00",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"avatar": "/avatars/Body.png",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"created_at": "2023-02-02T11:56:20.504029Z",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"updated_at": "2023-02-02T21:36:22.776411Z",</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_active": true,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_online": false,</br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"contacts": [</br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"first_name": null,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"last_name": null,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": "device.png",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phone": "+77770237836",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"time_zone": "123",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"avatar": "avatars/device.png",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"created_at": "2023-02-02T14:53:30.838788Z",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"updated_at": "2023-02-02T20:44:43.301738Z",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_active": true,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is_online": false,</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"in_calendaria": true</br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "label": "Noname",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phone": "+77770237832",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tel",</br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"in_calendaria": false</br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</br>
+      </span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{'message': 'user do not exist'}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Получим иного пользователя зарегистрированного в сервисе</span></p>
+      <p><span style="font-weight: bold">Описание:</span> При получении нужно учесть что вместо int:id нужно ввести айдишку пользователя которого мы хотим получить и нужно быть авторизованным</p>
+    </div>
+
+     <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Обновление пользователя</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/change_status/">https://backend.calendaria.kz/users/change_status/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message": "user status online"} или {"message": "user status offline"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">сменится статус пользователя в сети</span></p>
+      <p><span style="font-weight: bold">Описание:</span> при отправке токена в хэдерах на этот ендпоинт получим смену статуса если он был онлайн на оффлайн или наоборот</p>
+    </div>
+      <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Добавление контакта</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/add_new_contact/">https://backend.calendaria.kz/users/add_new_contact/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"label":"Bek", "phone":"+77770237836", "type":"phone"}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{'message': 'contact already exist'} или {"message":"учетные данные не были предоставлены"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">добавляет контакт пользователю</span></p>
+    </div>
+      <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Удаление контакта</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/delete_contact/950/">https://backend.calendaria.kz/users/delete_contact/int:id/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message": "contact was deleted"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Контакт удален удален</span></p>
+    </div>
+      <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Удаление пользователя</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/users/delete_user/">https://backend.calendaria.kz/users/delete_user/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message": "user was deleted"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Пользователь удален</span></p>
+    </div>
+  </div>
+</body>
+</html>

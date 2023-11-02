@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Руководство backend.calendaria.kz</title>
+</head>
+<body style="font-family: 'Roboto Light', sans-serif; margin: 0; min-height: 100vh">
+<header style="background: blue; width: 100%">
+  <div style="width: 1000px; display: flex; justify-content: space-between; color: white; margin: auto; align-items: center">
+    <h5>Документация для backend.calendaria.kz</h5>
+  </div>
+</header>
+  <div style="max-width: 1000px; margin: auto;">
+    <p>Выберите микросервис</p>
+    <nav>
+      <ul style="margin: 0">
+        <li><a href="https://backend.calendaria.kz/docs/user.html">Пользователь</a></li>
+        <li><a href="https://backend.calendaria.kz/docs/utils.html">Утилиты</a></li>
+        <li><a href="https://backend.calendaria.kz/docs/events.html">События (events)</a></li>
+      </ul>
+    </nav>
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Создание event (события)</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/events/create_event/">https://backend.calendaria.kz/events/create_event/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{"title": "test", "all_day": true, "start_date": "28-02-2023 02:12:11" , "end_date": "28-02-2023 02:12:11", "notification_setting":"2400", "repeat":"Every Day", "event_type":"Work", "location_name" : "Almaty", "lng":40.41, "lat": 40.41, "description":"some text", "cover_image":File or null}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"event_id": 10}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{message: "failed"}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">создастся event и вернется event_id который можно использовать для следующих endpoint</span></p>
+      <p><span style="font-weight: bold">Описание:</span> Предназначен для создание event принадлежащий пользователю</p>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Добавление ссылок к event</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/events/add_links/">https://backend.calendaria.kz/events/add_links/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{
+    "event_id": 10,
+    "links":["https://stackoverflow.com/questions/14212527/how-to-set-default-value-to-the-inputtype-date", "http://localhost:63342/calendaria-backend/docs/events.html?_ijt=l4och8tc0hf6c2koln7ddeqnvd&_ij_reload=RELOAD_ON_SAVE"]
+}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message":"links are saved"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+            "non_field_errors": [
+                "учетные данные не были предоставлены"
+            ]
+        }</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Cсылки event будут сохранены</span></p>
+      <p><span style="font-weight: bold">Описание:</span> к event будут добавлены ссылки и будут доступны для дальнейшего использования</p>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Добавление файлов к event</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/events/add_attachments/">https://backend.calendaria.kz/events/add_attachments/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{
+    "event_id": 10,
+    "attachments":[{"attachment_type": "File", "attachment": File}]
+}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message":"attachments are saved"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+            "non_field_errors": [
+                "учетные данные не были предоставлены"
+            ]
+        }</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">файлы event будут сохранены</span></p>
+      <p><span style="font-weight: bold">Описание:</span> к event будут добавлены файлы и будут доступны для дальнейшего использования</p>
+    </div>
+
+     <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Приглашение пользователей в event</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/events/invite_users/">https://backend.calendaria.kz/events/invite_users/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{
+    "event_id": 10,
+    "participants":[{"user_id": 1, "user_permission": "admin"}]
+}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message":"users invited"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+            "non_field_errors": [
+                "учетные данные не были предоставлены"
+            ]
+        }</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">пользователи будут приглашены в event</span></p>
+      <p><span style="font-weight: bold">Описание:</span> к event будут привязаны индивидуальные модели приглашений и занесены в базу для дальнейшего использования</p>
+    </div>
+
+  <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">ответ пользователя на приглашение в event</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/events/user_response/">https://backend.calendaria.kz/events/user_response/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> POST</p>
+      <p><span style="font-weight: bold">Входные данные:</span> <span style="color:green">{
+    "invite_id": 1,
+    "answer": "denied"
+}</span></p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{"message":"invite updated"}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+            "non_field_errors": [
+                "учетные данные не были предоставлены"
+            ]
+        }</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">пользователь сможет принять и отклонить свое приглашение в event</span></p>
+    </div>
+
+      <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">получить event</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/events/get_opened_event/10/">https://backend.calendaria.kz/events/get_opened_event/:int/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span> <span style="color:green">{все данные по event}</span></p>
+      <p><span style="font-weight: bold">Ошибка:</span> <span style="color:red">{
+            {"message":"event do not exist}</span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">получение всех данных по одному ивенту</span></p>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Руководство backend.calendaria.kz</title>
+</head>
+<body style="font-family: 'Roboto Light', sans-serif; margin: 0;">
+<header style="background: blue; width: 100%">
+  <div style="width: 1000px; display: flex; justify-content: space-between; color: white; margin: auto; align-items: center">
+    <h5>Документация для backend.calendaria.kz</h5>
+  </div>
+</header>
+  <div style="max-width: 1000px; margin: auto; min-height: 100vh">
+    <p>Выберите микросервис</p>
+    <nav>
+      <ul style="margin: 0">
+        <li><a href="https://backend.calendaria.kz/docs/user.html">Пользователь</a></li>
+        <li><a href="https://backend.calendaria.kz/docs/utils.html">Утилиты</a></li>
+        <li><a href="https://backend.calendaria.kz/docs/events.html">События (events)</a></li>
+      </ul>
+    </nav>
+    <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Получение Всех Timezone (часовых поясов по Гринвичу)</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/properties/timezone_list/">https://backend.calendaria.kz/properties/timezone_list/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <p><span style="font-weight: bold">Ответ:</span>
+        <span style="color:green"><br/>
+        [<br/>
+          &nbsp;&nbsp;&nbsp;"International Date Line West GMT-11:00",<br/>
+          &nbsp;&nbsp;&nbsp;"Midway Island GMT-11:00",<br/>
+          &nbsp;&nbsp;&nbsp;"Samoa GMT-11:00",<br/>
+          &nbsp;&nbsp;&nbsp;...
+          &nbsp;&nbsp;&nbsp;"Wellington GMT+12:00",<br/>
+          &nbsp;&nbsp;&nbsp; "Nuku'alofa GMT+13:00",<br/>
+      ]<br/></span></p>
+      <p><span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Получение массива всех часовых поясов</span></p>
+    </div>
+       <div style="margin-top: 20px; margin-bottom: 20px; border:1px solid black; padding: 10px; border-radius: 5px">
+      <p style="margin:0; font-weight: bold">Получение Всех Кодов стран</p>
+      <p><span style="font-weight: bold">Endpoint:</span> <a target="_blank" href="https://backend.calendaria.kz/properties/countrycodes_list/">https://backend.calendaria.kz/properties/countrycodes_list/</a></p>
+      <p><span style="font-weight: bold">Метод:</span> GET</p>
+      <span style="font-weight: bold">Результат:</span> <span style="color:midnightblue">Получение массива всех кодов стран</span></p>
+    </div>
+  </div>
+</body>
+</html>

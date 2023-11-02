@@ -1,0 +1,8 @@
+**/__pycache__
+.idea/
+media/
+.env
+
+# Ignore postgres data
+postgres/
+postgres-data/

@@ -1,0 +1,54 @@
+version: '3.9'
+
+networks:
+  backend:
+    name: backend
+    external: true
+
+services:
+  dev_app:
+    container_name: dev_app
+    build:
+      context: .
+    restart: always
+    command:
+      - /bin/sh
+      - -c
+      - ./entrypoint.sh
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DOMAIN}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    user: 'django:django'
+    volumes:
+      - media:/vol/media
+    ports:
+      - '8001:8000'
+    expose:
+      - '8000'
+    depends_on:
+      - dev_db
+    networks:
+      - backend
+
+  dev_db:
+    container_name: dev_db
+    image: postgres
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --locale=en_US.UTF-8 -A md5'
+    networks:
+      - backend
+
+volumes:
+  postgres-data:
+  media:

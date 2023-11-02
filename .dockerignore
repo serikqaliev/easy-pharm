@@ -1,0 +1,13 @@
+# Ignore file folders
+./chat_files
+./chat_images
+./chat_videos
+./chat_video_thumbnails
+./group_chat_covers
+# Ignore files
+./media
+# Ignore postgres
+./postgres
+./postgres_data
+./avatars
+**/__pycache__
