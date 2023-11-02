@@ -1,7 +1,4 @@
-from datetime import datetime
-
 import requests
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from fcm_django.models import FCMDevice
 from rest_framework import status
@@ -11,8 +8,7 @@ from rest_framework.response import Response
 
 from users.models import User
 from users.serializers import UserSerializer
-from users.utils.phone import get_e164_phone, format_phone_number
-from utils.common import create_otp, send_any_notification
+from utils.common import create_otp
 
 
 @api_view(['GET'])
@@ -29,7 +25,6 @@ def create_user(request):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     phone = request.data['phone']
-    device_token = request.data['device_token']
     otp = create_otp()
 
     user, created = User.objects.get_or_create(phone=phone)
@@ -41,26 +36,9 @@ def create_user(request):
     )
 
     if send_message.status_code == 200:
-        device, created = FCMDevice.objects.get_or_create(registration_id=device_token)
-        device.user = user
-        device.save()
-        user.save()
         return Response({'message': 'Success'}, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Failed'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['POST'])
-@permission_classes((IsAuthenticated,))
-def change_avatar(request):
-    if request.method == 'POST':
-        if request.user:
-            user = get_object_or_404(User, id=request.user.id)
-            user.avatar = request.data.get('avatar', None)
-            user.save()
-            return Response({'message': 'avatar changed'}, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['POST'])
@@ -69,27 +47,16 @@ def activate_user(request):
     if request.method == 'POST':
         if request.user:
             username = request.data['username']
-            time_zone = request.data['time_zone']
 
             user = get_object_or_404(User, id=request.user.id)
             user.username = username
-            user.time_zone = time_zone
-            user.in_calendaria = True
+            user.is_active = True
 
             user.save()
 
             return Response({'message': 'User activated'}, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-
-@api_view(['POST'])
-@permission_classes((IsAuthenticated,))
-def get_user_details(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    serializer = UserSerializer(user, context={"user": request.user})
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

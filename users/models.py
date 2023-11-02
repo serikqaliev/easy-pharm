@@ -65,66 +65,27 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True
     )
-    time_zone = models.CharField(
-        max_length=256,
-        verbose_name='Time zone',
-        null=True,
-        blank=True
-    )
-    avatar = models.ImageField(
-        verbose_name='Avatar',
-        upload_to="users/avatars/",
-        null=True,
-        blank=True
-    )
-    in_calendaria = models.BooleanField(
+    is_active = models.BooleanField(
         default=False,
         verbose_name='Active?',
-        help_text='Status (default "No")',
+        help_text='Status (default "False")',
     )
-    # Дата создания
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Created at',
         null=True,
-    )
-    status = models.CharField(
-        max_length=800,
-        verbose_name='Text status',
-        null=True,
-        blank=True
-    )
-    status_change_at = models.DateTimeField(
-        verbose_name='Status change date',
-        null=True,
-        blank=True
     )
     updated_at = models.DateTimeField(
         auto_now=True,
         verbose_name='Updated at',
         null=True,
     )
-    is_online = models.BooleanField(
-        default=False,
-        verbose_name='Online?',
-        help_text='Status (default "No")',
-    )
-    last_online = models.DateTimeField(
-        verbose_name='Last online',
-        null=True,
-        blank=True
-    )
-    # Django Additional (не трогать)
+    # Django Additional (admin panel)
     is_staff = models.BooleanField(
         default=False,
         verbose_name='Is staff?',
         help_text='Only for admin panel',
-    )  # права к админ-панели
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name='Is active?',
-        help_text='Status (default "Yes")',
-    )  # активный аккаунт
+    )
 
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = ["username"]
@@ -137,3 +98,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone
+
