@@ -27,7 +27,7 @@ requests-toolbelt==0.8.0
 requests-unixsocket==0.2.0
 six==1.14.0
 ssh-import-id==5.10
-urllib3==1.25.8
+urllib3==1.26.18
 virtualenv==20.15.1
 zope.component==4.3.0
 zope.event==4.4
