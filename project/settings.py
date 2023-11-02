@@ -53,9 +53,7 @@ INSTALLED_APPS = [
     # Our
     'users',
     'properties',
-    'events',
-    'chat',
-    'notifications',
+    'medicines'
 ]
 WSGI_APPLICATION = 'project.wsgi.application'
 ASGI_APPLICATION = 'project.asgi.application'
@@ -123,23 +121,13 @@ TEMPLATES = [
     },
 ]
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', 'calendaria'),
-        'USER': os.environ.get('DB_USER', 'admin'),
-        'PASSWORD': os.environ.get('DB_PASS', 'Calendaria-123'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
+        'NAME': os.environ.get('DB_NAME', 'easypharm'),
+        'USER': os.environ.get('DB_USER', 'easypharm'),
+        'PASSWORD': os.environ.get('DB_PASS', 'easypharm'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': int(os.environ.get('DB_PORT', 5432)),
         'ATOMIC_REQUESTS': False
     }

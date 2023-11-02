@@ -22,6 +22,9 @@ activate:
 daphne:
 	daphne -b 0.0.0.0 -p 8000 project.asgi:application
 
+create-db:
+	docker run --name easypharm -p 5432:5432 -e POSTGRES_USER=easypharm -e POSTGRES_PASSWORD=easypharm -e POSTGRES_DB=easypharm -d postgres
+
 migrations:
 	python manage.py makemigrations
 
