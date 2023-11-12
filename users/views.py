@@ -71,7 +71,7 @@ def activate_user(request):
         return Response({'message': 'Failed'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(['DELETE'])
 @permission_classes((IsAuthenticated,))
 def delete_user(request):
     User.objects.filter(id=request.user.id).delete()
