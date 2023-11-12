@@ -9,4 +9,6 @@ urlpatterns = [
     path('properties', include('properties.urls')),
     path('medicines', include('medicines.urls')),
     path('symptoms', include('symptoms.urls')),
+    path('categories', include('categories.urls')),
+    path('cart', include('cart.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

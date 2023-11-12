@@ -1,7 +1,7 @@
-import requests
 from django.shortcuts import get_object_or_404
 from fcm_django.models import FCMDevice
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -14,6 +14,7 @@ from utils.common import create_otp
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def me_view(request):
+    print('user: ', request.user)
     serializer = UserSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -21,42 +22,53 @@ def me_view(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def create_user(request):
-    if not request.method == 'POST':
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
     phone = request.data['phone']
-    otp = create_otp()
 
     user, created = User.objects.get_or_create(phone=phone)
-    user.set_password(otp)
+    user.set_password('111111')
     user.save()
 
-    send_message = requests.get(
-        f'https://smsc.kz/sys/send.php?login=akzholqz&psw=01Cale02nda03ria&phones={phone}&mes=Код%20доступа%20Calendaria%20:%20{otp}'
-    )
+    return Response({'user_id': user.id}, status=status.HTTP_200_OK)
 
-    if send_message.status_code == 200:
-        return Response({'message': 'Success'}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def verify_user(request):
+    user_id = request.data['user_id']
+    code = request.data['code']
+
+    user = get_object_or_404(User, id=user_id)
+
+    if code == '111111':
+        token, created = Token.objects.get_or_create(user=user)
+        print('token', token.key, 'created', created)
+        serializer = UserSerializer(user).data
+
+        return Response(serializer, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Failed'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def activate_user(request):
-    if request.method == 'POST':
-        if request.user:
-            username = request.data['username']
+    if request.user:
+        username = request.data['username']
+        staff_secret = request.data.get('staff_secret', None)
 
-            user = get_object_or_404(User, id=request.user.id)
-            user.username = username
-            user.is_active = True
+        user = get_object_or_404(User, id=request.user.id)
+        user.username = username
+        user.is_registered = True
 
-            user.save()
+        if staff_secret == 'DiplomaWork':
+            user.is_staff = True
 
-            return Response({'message': 'User activated'}, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user.save()
+
+        serializer = UserSerializer(user).data
+        return Response({'user': serializer}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'Failed'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])

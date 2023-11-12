@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from fcm_django.models import FCMDevice
 
 
 class UserManager(BaseUserManager):
@@ -38,14 +37,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    # not Delete! (не трогать)
     first_name = models.CharField(
         max_length=100,
         verbose_name='First name',
         null=True,
         blank=True
     )
-    # not Delete! (не трогать)
     last_name = models.CharField(
         max_length=100,
         verbose_name='Last name',
@@ -55,7 +52,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=256,
         verbose_name='Nickname',
-        null=True,
         blank=True
     )
     phone = models.CharField(
@@ -64,11 +60,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
         null=True,
         blank=True
-    )
-    is_active = models.BooleanField(
-        default=False,
-        verbose_name='Active?',
-        help_text='Status (default "False")',
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -80,12 +71,25 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='Updated at',
         null=True,
     )
+    is_registered = models.BooleanField(
+        default=False,
+        verbose_name='Is registered?',
+        help_text='Status (default "False")',
+    )
     # Django Additional (admin panel)
     is_staff = models.BooleanField(
         default=False,
         verbose_name='Is staff?',
         help_text='Only for admin panel',
     )
+    # Django Additional (admin panel)
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Active?',
+        help_text='Status (default "False")',
+    )
+
+    cart = models.ManyToManyField('medicines.Medicine', through='cart.Cart', related_name='carts')
 
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = ["username"]
@@ -98,4 +102,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone
-
