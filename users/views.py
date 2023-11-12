@@ -66,7 +66,7 @@ def activate_user(request):
         user.save()
 
         serializer = UserSerializer(user).data
-        return Response({'user': serializer}, status=status.HTTP_200_OK)
+        return Response(serializer, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Failed'}, status=status.HTTP_400_BAD_REQUEST)
 
